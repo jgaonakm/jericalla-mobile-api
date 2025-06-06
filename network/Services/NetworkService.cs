@@ -18,10 +18,10 @@ public class NetworkService : INetworkService
 
         var simCards = simFaker.Generate(100);
 
-        int index = 1;
+        int index = 100;
         foreach (var sim in simCards)
         {
-            sim.SimId = $"SIM{(index++).ToString().PadLeft(3, '0')}";
+            sim.SimId = $"SIM{(index++).ToString()}";
             Sims[sim.SimId] = sim;
             Roaming[sim.SimId] = new RoamingStatus
             {
