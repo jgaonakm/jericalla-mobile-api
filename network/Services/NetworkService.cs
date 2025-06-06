@@ -9,6 +9,25 @@ public class NetworkService : INetworkService
     private static readonly ConcurrentDictionary<string, Device> Devices = new();
     private static readonly ConcurrentDictionary<string, RoamingStatus> Roaming = new();
 
+    static NetworkService()
+    {
+        var simFaker = new Faker<SimCard>("es_MX")
+        .RuleFor(s => s.SimId, f => f.Random.Replace("SIM######"))
+        .RuleFor(s => s.PhoneNumber, f => f.Phone.PhoneNumber("52##########"))
+        .RuleFor(s => s.IsActive, f => f.Random.Bool());
+
+        var simCards = simFaker.Generate(100);
+
+        foreach (var sim in simCards)
+        {
+            Sims[sim.SimId] = sim;
+            Roaming[sim.SimId] = new RoamingStatus
+            {
+                SimId = sim.SimId,
+                IsRoamingEnabled = false
+            };
+        } 
+    }
     public SignalReport CheckSignal(string location)
     {
         return new SignalReport
