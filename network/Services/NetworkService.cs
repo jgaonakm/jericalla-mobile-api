@@ -1,4 +1,5 @@
 using Models;
+using Bogus;
 using System.Collections.Concurrent;
 
 namespace Services;
@@ -12,21 +13,22 @@ public class NetworkService : INetworkService
     static NetworkService()
     {
         var simFaker = new Faker<SimCard>("es_MX")
-        .RuleFor(s => s.SimId, f => f.Random.Replace("SIM######"))
         .RuleFor(s => s.PhoneNumber, f => f.Phone.PhoneNumber("52##########"))
         .RuleFor(s => s.IsActive, f => f.Random.Bool());
 
         var simCards = simFaker.Generate(100);
 
+        int index = 1;
         foreach (var sim in simCards)
         {
+            sim.SimId = $"SIM{(index++).ToString().PadLeft(3, '0')}";
             Sims[sim.SimId] = sim;
             Roaming[sim.SimId] = new RoamingStatus
             {
                 SimId = sim.SimId,
                 IsRoamingEnabled = false
             };
-        } 
+        }
     }
     public SignalReport CheckSignal(string location)
     {
@@ -66,7 +68,7 @@ public class NetworkService : INetworkService
 
     public RoamingStatus GetRoamingStatus(string simId)
     {
-        return Roaming.TryGetValue(simId, out var status) ? status : null;
+        return Roaming.TryGetValue(simId, out var status) ? status : null!;
     }
 
     public bool UpdateRoamingStatus(string simId, bool enable)

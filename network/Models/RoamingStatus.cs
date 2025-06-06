@@ -1,6 +1,6 @@
 namespace Models;
 public class RoamingStatus
 {
-    public string SimId { get; set; }
-    public bool IsRoamingEnabled { get; set; }
+    public required string SimId { get; set; }
+    public required bool IsRoamingEnabled { get; set; }
 }
