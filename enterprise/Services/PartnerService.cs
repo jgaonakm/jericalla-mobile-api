@@ -15,7 +15,7 @@ public class EnterpriseService : IEnterpriseService
     {
         var partnerFaker = new Faker<Partner>("es_MX")
             .RuleFor(p => p.CompanyName, f => f.Company.CompanyName())
-            .RuleFor(p => p.ContactEmail, f => f.Internet.Email())
+            .RuleFor(p => p.ContactEmail, f => f.Internet.ExampleEmail())
             .RuleFor(p => p.ApiKey, f => f.Random.AlphaNumeric(32))
             .RuleFor(p => p.RegisteredAt, f => f.Date.Past(3));
 

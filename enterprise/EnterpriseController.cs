@@ -3,7 +3,7 @@ using Models;
 using Services;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/{version}/[controller]")]
 public class EnterpriseController : ControllerBase
 {
     private readonly IEnterpriseService _service;

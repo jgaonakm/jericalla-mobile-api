@@ -3,7 +3,7 @@ using Models;
 using Services;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/{version}/[controller]")]
 public class NetworkController : ControllerBase
 {
     private readonly INetworkService _service;
