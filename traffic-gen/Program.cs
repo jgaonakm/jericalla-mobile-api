@@ -17,7 +17,7 @@ List<string> endpoints = new List<string>
         "v2/Enterprise/agreements",
     };
 
-string baseUrl = "https://jericalla-mobile-main-cb22dab.d2.zuplo.dev/api/";
+string baseUrl = "[API Manager URL]";
 
 Random random = new Random();
 
