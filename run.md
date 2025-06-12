@@ -2,7 +2,14 @@
 
 We've stated already that the code is divided in three funcional domains. Each domain has it's own .NET WebAPI project in a separate directory, with a Dockerfile for creating the corresponding container image. This way you can run in any environment as standalone containers or with orchestration tools.
 
-The APIs come with "seeded" dummy data to be ready to use. Feel free to fork the repository and add your own database if required.
+The APIs come with "seeded" dummy data to be ready to use.
+
+- Accounts and their usage, for IDs 100 to 199
+- Partners and their agreements, for IDs 100 to 199
+- SIMs with ID 100 to 199, in format `SIMXXX`, including their roaming status
+- Signal for any location passed as `string`
+
+Feel free to fork the repository and add your own database if required.
 
 ## Deployment
 
