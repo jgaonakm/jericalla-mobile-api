@@ -8,7 +8,7 @@ The APIs come with "seeded" dummy data to be ready to use. Feel free to fork the
 
 Using Akamai Cloud, you can easily deploy the APIs on LKE by using AppPlatform. Using this path allows you to have a private image repository with Harbor and run the APIs as Knative Services, without requiring to provide other infrastructure than a your Kubernetes Cluster.
 
-> Read more about the process in the [AppPlatform documentation](https://apl-docs.net/docs/akamai-app-platform/introduction). If needed, you can [create a Linode account](https://login.linode.com/signup?promo=docs05012025) to try this guide with a $100 credit.
+> Read more about the process in the [AppPlatform documentation](https://apl-docs.net/docs/akamai-app-platform/introduction). [Here's a repository](https://github.com/jgaonakm/apl-sample-workloads) with additional examples, in case you want to keep exploring the tool. If needed, you can [create a Linode account](https://login.linode.com/signup?promo=docs05012025) to try this guide with a $100 credit.
 
 If you prefer other options, there are multiple paths you can follow:
 
@@ -33,12 +33,14 @@ You will use the specification files for the three APIs for the [Zuplo configura
 
 ## Traffic Generation
 
-To make it easier to test capabilities like logs and analytics, you can use the traffic generation console app.
+To make it easier to test Zuplo capabilities like logs and analytics, you can use the traffic generation console app.
 
-Once you've completed the Zuplo configuration execute the application (using `dotnet run` or as a container) providing the base url deployment as an environment variable.
+Once you've completed the Zuplo configuration, run the application (using `dotnet run` or as a container) providing the base url deployment as an environment variable.
 
-`export API_BASE_URL="https://[Gateway URL]/api/"`
+```sh
+export API_BASE_URL="https://[Gateway URL]/api/"
+```
 
-The code selects randomly one of the endpoints from the list to make a call and print the response to the console. The traffic generated is reflected on the Zuplo console and externally if sending logs elsewhere.
+The code runs an infinite loop, with 500ms pauses between iterations. On each, it selects randomly one of the endpoints from the list and makes a call, printing the response to the console. The traffic generated is reflected on the Zuplo console and externally if sending logs elsewhere.
 
 **Next >** [Create Zuplo configuration](https://github.com/jgaonakm/jericalla-mobile-api-mgr).
