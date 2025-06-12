@@ -1,6 +1,6 @@
 # Jericalla Mobile
 
-This sample API showcases the advantages of using Zuplo on a modular and extensible RESTful API representative of a telecommunications carrier's digital services called Jericalla Mobile.
+This sample API showcases the advantages of using Zuplo on a modular and extensible RESTful API representative of a fake telecommunications carrier's digital services called Jericalla Mobile.
 
 It's divided in two repositories; here, we have the source code of the APIs, and [this is the repository](https://github.com/jgaonakm/jericalla-mobile-api-mgr) with the Zuplo Configuration.
 
