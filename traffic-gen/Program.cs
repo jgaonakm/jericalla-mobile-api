@@ -15,9 +15,10 @@ List<string> endpoints = new List<string>
         "v2/Enterprise/partners",
         "v2/Enterprise/accounts",
         "v2/Enterprise/agreements",
+        "v2/dummy"
     };
 
-string baseUrl = "[API Manager URL]";
+string baseUrl = Environment.GetEnvironmentVariable("API_BASE_URL")!;//Pointing to the API Manager URL;
 
 Random random = new Random();
 
