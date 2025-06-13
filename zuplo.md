@@ -60,3 +60,5 @@ Some (optional) examples present on this guide require additional variables:
   - OPEN_AI
 
 ![Open AI](img/open-ai.png)
+
+**Next >** [Traffic generation](zuplo.md)

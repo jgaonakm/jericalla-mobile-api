@@ -38,4 +38,4 @@ You can access the Open API Specification file, commonly known as swagger file, 
 
 You will use the specification files for the three APIs for the Zuplo configuration prepared for this guide.
 
-**Next >** [Create Zuplo configuration](zuplo.md).
+**Next >** [Create Zuplo configuration](zuplo.md)
