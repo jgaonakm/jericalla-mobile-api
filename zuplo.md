@@ -33,9 +33,28 @@ The process finishes in a few seconds. Click on the "Code" tab, and you should b
 The project comes with the following configuration
 
 - API routes for `v1` (marked as deprecated) and `v2`. All routes are configured to point to the same backend URL.
-- Multiple input and output policies, some of them already applied to routes.
 - Modules for custom-code policies and routes that use functions (i.e. not pointing to a backend).
 - Runtime configuration, with code for sending the logs to Loki.
+
+Talking about the policies, the example includues the following examples (both input and output), some of them already applied to routes:
+
+- Inbound:
+  - Sleep: Delay the request for one second
+  - Monetization: Block request from non-paying users. Requires monetization configuration.
+  - Api Key: Block unauthorized requests.
+  - Basic Rate Limit: Establish a limit of two requests each second for each IP.
+  - Set accept-xml: Sets the `accept-xml` header for the backend API, wich in turn will respond with XML instead of JSON.
+  - Geo filter: Blocks requests from clients that aren't present on the defined list.
+  - Random error: Randomly return an error (HTTP 500). Currently set at 50% probability.
+  - Change method: Changes the HTTP verb to be used for the backend API.
+  - Set OpenAI auth & Create OpenAI body: Used for calling OpenAI as the backend API for the GenAI example.
+  - Clear headers: Delete all the headers sent from the client
+
+- Outbound:
+  - Replace `null`: Replaces the `null` values from the body with a `-1`.
+  - XML to JSON (basic): Transforms the XML response to JSON format as is.
+  - XML to JSON (advanced): Creates a JSON structure different than what's received as XML.
+  - Clear OpenAI headers & transform OpenAI body: Used on the GenAI example to abstract away details.
 
 ## Environment variables
 
