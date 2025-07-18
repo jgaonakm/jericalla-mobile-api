@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 
 namespace Services;
 
-public class CustomerService: ICustomerService
+public class CustomerService : ICustomerService
 {
     private static readonly ConcurrentDictionary<string, Customer> Customers = new();
     private static readonly ConcurrentDictionary<string, AccountUsage> UsageData = new();
@@ -53,7 +53,12 @@ public class CustomerService: ICustomerService
 
     public bool ChangePlan(string customerId, string newPlanId)
     {
-        // Stub logic
         return Customers.ContainsKey(customerId);
+    }
+    
+    public Payments GetPaymentsByCustomerId(string id)
+    {
+        // Stub logic for payments
+        return new Payments { CustomerId = id, Amount = 0.0, PaymentDate = DateTime.Now };
     }
 }
