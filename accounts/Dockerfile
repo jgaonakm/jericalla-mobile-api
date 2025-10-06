@@ -15,7 +15,7 @@ RUN dotnet publish -c Release -o out
 # Build runtime image, using multi-stage builds
 # https://docs.docker.com/build/building/multi-stage/
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
 WORKDIR /App
 
 COPY --from=build-env /App/out .
