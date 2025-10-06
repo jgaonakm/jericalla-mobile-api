@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: accounts-api
+spec: 
+  type: LoadBalancer
+  ports:
+    - name: api
+      port: 80
+      targetPort: http
+  selector:
+    app: accounts-api
