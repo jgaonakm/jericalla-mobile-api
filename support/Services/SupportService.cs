@@ -1,58 +1,63 @@
 using Models;
+using MongoDB.Driver;
+
 using System.Collections.Concurrent;
 namespace Services;
+
 public class SupportService : ISupportService
 {
-    private static readonly ConcurrentDictionary<string, Ticket> Tickets = new();
-    private static readonly ConcurrentDictionary<string, OutageReport> Outages = new();
-    private static readonly ConcurrentDictionary<string, DeviceDiagnostics> Diagnostics = new();
+    private readonly MongoContext _context;
 
-    public SupportService()
+    public SupportService(MongoContext context)
     {
-        // Seed with sample data
-        Outages["CDMX"] = new OutageReport { Region = "CDMX", HasOutage = false, Details = "All systems normal.", LastUpdated = DateTime.UtcNow };
-        Diagnostics["device-1001"] = new DeviceDiagnostics
-        {
-            DeviceId = "device-1001",
-            BatteryLevelPercent = 78,
-            SignalStrengthDbm = -62,
-            CpuLoadPercent = 34.5,
-            Timestamp = DateTime.UtcNow
-        };
+        _context = context;
     }
 
+    /// <summary>
+    /// Creates a new ticket by assigning a unique TicketId, setting the creation date to the current UTC time,
+    /// initializing the ticket status to "Open", and inserting the ticket into the database.
+    /// </summary>
+    /// <param name="ticket">The <see cref="Ticket"/> object to be filed.</param>
+    /// <returns>The filed <see cref="Ticket"/> object with updated properties.</returns>
+    /// <example>
+    /// Example of a generated ticket:
+    /// TicketId: "665f9c2e7b3e2a1f8c9d1234"
+    /// CreatedAt: 2024-06-10T14:23:45Z
+    /// Status: "Open"
+    /// </example>
     public Ticket FileTicket(Ticket ticket)
     {
-        ticket.TicketId = Guid.NewGuid().ToString();
         ticket.CreatedAt = DateTime.UtcNow;
         ticket.Status = "Open";
-        Tickets[ticket.TicketId] = ticket;
+        _context.Tickets.InsertOne(ticket);
         return ticket;
     }
 
     public Ticket GetTicket(string ticketId)
     {
-        return Tickets.TryGetValue(ticketId, out var ticket) ? ticket : null;
+
+        return _context.Tickets.Find(t => t.TicketId == ticketId).FirstOrDefault();
     }
 
     public IEnumerable<Ticket> GetAllTickets()
     {
-        return Tickets.Values;
+        return _context.Tickets.Find(_ => true).ToList();
+    }
+
+
+    public IEnumerable<Ticket> GetAllTickets(string customerId)
+    {   
+        return _context.Tickets.Find(t => t.CustomerId == customerId).ToList();
     }
 
     public OutageReport GetOutageStatus(string region)
     {
-        return Outages.TryGetValue(region, out var report) ? report : new OutageReport
-        {
-            Region = region,
-            HasOutage = false,
-            Details = "No information available.",
-            LastUpdated = DateTime.UtcNow
-        };
+        return _context.OutageReports.Find(r => r.Region == region).FirstOrDefault()
+                   ?? new OutageReport { Region = region, HasOutage = false, Details = "No data", LastUpdated = DateTime.UtcNow };
     }
 
     public DeviceDiagnostics GetDeviceDiagnostics(string deviceId)
     {
-        return Diagnostics.TryGetValue(deviceId, out var diag) ? diag : null;
+        return _context.DeviceDiagnostics.Find(d => d.DeviceId == deviceId).FirstOrDefault();
     }
 }

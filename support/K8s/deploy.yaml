@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: support-api
+  labels:
+    app: support-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: support-api
+  template:
+    metadata:
+      labels:
+        app: support-api
+    spec:
+      containers:
+      - name: support-api
+        image: jgaonaakm/jericalla-mobile-api-support:1.0.3-alpine #-arm64
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: CONN_STRING
+          value: "xxx"
+        - name: DB_NAME  
+          value: "SupportDB"
