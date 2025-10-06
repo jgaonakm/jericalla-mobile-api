@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-enterprise
+  labels:
+    app: api-enterprise
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-enterprise
+  template:
+    metadata:
+      labels:
+        app: api-enterprise
+    spec:
+      containers:
+      - name: api-enterprise
+        image: jgaonaakm/jericalla-mobile-api-enterprise:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-enterprise
+spec: 
+  type: ClusterIP
+  ports:
+    - name: api
+      port: 80
+      targetPort: http
+  selector:
+    app: api-enterprise
